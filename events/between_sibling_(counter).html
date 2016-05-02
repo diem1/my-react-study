@@ -20,12 +20,9 @@
     });
 
     var Button = React.createClass({
-      counterPlusOne: function(){
-        this.props.plus();
-      },
       render: function(){
         return(
-          <button onClick={this.counterPlusOne}>Press Me</button>
+          <button onClick={this.props.plus}>Press Me</button>
         );
       }
     });
