@@ -23,7 +23,8 @@
 
       var Form = React.createClass({
         changeName: function(event){
-          this.props.changeName(event.target.value);
+          var name = event.target.value.toUpperCase();
+          this.props.changeName(name);
         },
         render: function(){
           return(
@@ -36,7 +37,7 @@
 
       var App = React.createClass({
         getInitialState: function(){
-          return{name: 'Ron'}
+          return{name: 'BOB'}
         },
         handleChangeName: function(newName){
           this.setState({name: newName});
