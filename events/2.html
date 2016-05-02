@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Events - React JS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+  </head>
+  <body>
+
+    <script type="text/babel">
+
+    var Info = React.createClass({
+      getInitialState: function(){
+        return {counter: 0};
+      },
+      render: function(){
+        return(
+          <h1>{this.state.counter}</h1>
+        );
+      }
+    });
+
+    var Button = React.createClass({
+      render: function(){
+        return(
+          <button> Press Me </button>
+        );
+      }
+    });
+
+    var App = React.createClass({
+      render: function(){
+        return(
+          <div>
+            <Info />
+            <Button />
+          </div>
+        );
+      }
+    });
+
+    ReactDOM.render(
+      <App />,
+      document.getElementById('wrapper')
+    );
+
+    </script>
+
+    <div id="wrapper">
+
+    </div>
+
+  </body>
+</html>
