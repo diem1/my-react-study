@@ -8,9 +8,9 @@
 
     <script type="text/javascript">
 
-      var jsonParse = function(callback){
+      var jsonParse = function(url, callback){
         var request = new XMLHttpRequest();
-        request.open('GET', 'https://api.github.com/users/octocat/gists', true);
+        request.open('GET', url, true);
 
         request.onload = function() {
           if (request.status >= 200 && request.status < 400) {
@@ -31,7 +31,11 @@
         request.send();
       }
 
-      jsonParse(function(err, data){
+      // ******************************
+
+      var url = 'https://api.github.com/users/octocat/gists';
+
+      jsonParse(url, function(err, data){
         console.log(err);
         console.log(data);
       });
