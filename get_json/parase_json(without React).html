@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <script type="text/javascript">
+
+      var jsonParse = function(callback){
+        var request = new XMLHttpRequest();
+        request.open('GET', 'https://api.github.com/users/octocat/gists', true);
+
+        request.onload = function() {
+          if (request.status >= 200 && request.status < 400) {
+            var data = JSON.parse(request.responseText);
+            var err = false;
+            return callback(err, data);
+          } else {
+            var err = 'We reached our target server, but it returned an error';
+            var data = null;
+            return callback(err, data);
+          }
+        };
+        request.onerror = function() {
+          var err = 'There was a connection error of some sort';
+          var data = null;
+          return callback(err, data);
+        };
+        request.send();
+      }
+
+      jsonParse(function(err, data){
+        console.log(err);
+        console.log(data);
+      });
+
+    </script>
+
+  </body>
+</html>
