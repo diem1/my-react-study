@@ -12,6 +12,90 @@
 
     <script type="text/babel">
 
+      var Gist = React.createClass({
+        render: function(){
+          return(
+            <li>
+              <a href={this.props.url} target="_blank">
+                {this.props.description}
+              </a>
+              {' - '}
+              {this.props.createdAt}
+            </li>
+          )
+        }
+      });
+
+      var Gists = React.createClass({
+
+        getInitialState: function(){
+          return{gists: []}
+        },
+
+        getGists: function(event){
+          var username = event.target.value;
+          var url = 'https://api.github.com/users/' + username + '/gists';
+          var _this = this;
+          this.jsonParse(url, function(err, data){
+            var gists = [];
+            data.forEach(function(gist, i, arr){
+              if(!gist.description){
+                gist.description = 'Unnamed';
+              }
+              gists[i] = <Gist
+                          key={gist.id}
+                          description={gist.description}
+                          url={gist.git_pull_url}
+                          createdAt={gist.created_at}
+                        />
+            });
+            _this.setState({gists: gists});
+          });
+        },
+
+        jsonParse: function(url, callback){
+          var request = new XMLHttpRequest();
+          request.open('GET', url, true);
+
+          request.onload = function() {
+            if (request.status >= 200 && request.status < 400) {
+              var data = JSON.parse(request.responseText);
+              var err = false;
+              return callback(err, data);
+            } else {
+              var err = 'We reached our target server, but it returned an error';
+              var data = null;
+              return callback(err, data);
+            }
+          };
+          request.onerror = function() {
+            var err = 'There was a connection error of some sort';
+            var data = null;
+            return callback(err, data);
+          };
+          request.send();
+        },
+
+        render: function(){
+          return(
+            <div>
+              <label>Username: </label>
+              <input onChange={this.getGists}></input>
+              <br/>
+              <ul>
+                {this.state.gists}
+              </ul>
+            </div>
+          );
+        }
+
+      });
+
+      ReactDOM.render(
+        <Gists />,
+        document.getElementById('wrapper')
+      );
+
     </script>
 
     <div id="wrapper"></div>
